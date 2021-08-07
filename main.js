@@ -1,6 +1,6 @@
 /* jshint -W097 */// jshint strict:false
 /*jslint node: true */
-/* enigma2 Adapter V 1.3.2 */
+/* enigma2 Adapter V 1.3.4 */
 'use strict';
 
 const request = require('request');
@@ -647,7 +647,7 @@ async function evaluateCommandResponse(command, deviceId, xml) {
 						role: 'state',
 						name: 'maximal Flash Capacity (Flash 1)',
 						read: true,
-						write: false
+						write: true
 					},
 					native: {}
 				});
@@ -658,7 +658,7 @@ async function evaluateCommandResponse(command, deviceId, xml) {
 						role: 'state',
 						name: 'free Flash Capacity (Flash 1)',
 						read: true,
-						write: false
+						write: true
 					},
 					native: {}
 				});
@@ -674,7 +674,7 @@ async function evaluateCommandResponse(command, deviceId, xml) {
 							role: 'state',
 							name: 'maximal Flash Capacity (Flash 2)',
 							read: true,
-							write: false
+							write: true
 						},
 						native: {}
 					});
@@ -685,7 +685,7 @@ async function evaluateCommandResponse(command, deviceId, xml) {
 							role: 'state',
 							name: 'free Flash Capacity (Flash 2)',
 							read: true,
-							write: false
+							write: true
 						},
 						native: {}
 					});
@@ -931,7 +931,7 @@ function setStatus(status) {
 			adapter.setState('enigma2.STANDBY', true, true);
 			adapter.setState('enigma2.VOLUME', "");
 			adapter.setState('enigma2.WEB_IF_VERSION', "");
-			adapter.setState('Message.MESSAGE_ANSWER', false, true);
+			//adapter.setState('Message.MESSAGE_ANSWER', false, true);
 			//...
 		}
 	}
@@ -1001,7 +1001,7 @@ function main() {
 			role: 'state',
 			name: 'Connection to Receiver',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1044,7 +1044,7 @@ function main() {
 			role: 'level.volume',
 			name: 'Volume 0-100%',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1055,7 +1055,7 @@ function main() {
 			role: 'message',
 			name: 'Message Answer',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1066,7 +1066,7 @@ function main() {
 			role: 'media.mute',
 			name: 'is Muted',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1077,7 +1077,7 @@ function main() {
 			role: 'state',
 			name: 'Receiver in Standby',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1088,7 +1088,7 @@ function main() {
 			role: 'state',
 			name: 'Channel Name',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1099,7 +1099,7 @@ function main() {
 			role: 'state',
 			name: 'Servicereference Code',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1110,7 +1110,7 @@ function main() {
 			role: 'state',
 			name: 'Servicereference Name',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1123,12 +1123,23 @@ function main() {
 				role: 'state',
 				name: 'Servicereference Picon',
 				read: true,
-				write: false
+				write: true
 			},
 			native: {}
 		});
 	} else {
-		adapter.delObject('enigma2.CHANNEL_PICON');
+	//	adapter.delObject('enigma2.CHANNEL_PICON');
+                adapter.setObjectNotExists('enigma2.CHANNEL_PICON', {
+                        type: 'state',
+                        common: {
+                                type: 'string',
+                                role: 'state',
+                                name: 'Servicereference Picon',
+                                read: true,
+                                write: true
+                        },
+                        native: {}
+                });
 	}
 	adapter.setObjectNotExists('enigma2.PROGRAMM', {
 		type: 'state',
@@ -1137,7 +1148,7 @@ function main() {
 			role: 'state',
 			name: 'current Programm',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1148,7 +1159,7 @@ function main() {
 			role: 'state',
 			name: 'current Programm Info',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1159,7 +1170,7 @@ function main() {
 			role: 'state',
 			name: 'Programm after',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1170,7 +1181,7 @@ function main() {
 			role: 'state',
 			name: 'Programm Info after',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1181,7 +1192,7 @@ function main() {
 			role: 'state',
 			name: 'Event description',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1189,11 +1200,11 @@ function main() {
 	adapter.setObjectNotExists('enigma2.EVENTDURATION', {
 		type: 'state',
 		common: {
-			type: 'string',
+			type: 'mixed',
 			role: 'media.duration.text',
 			name: 'Event Duration in H:M:S',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1201,11 +1212,11 @@ function main() {
 	adapter.setObjectNotExists('enigma2.EVENTREMAINING', {
 		type: 'state',
 		common: {
-			type: 'string',
+			type: 'mixed',
 			role: 'media.elapsed.text',
 			name: 'Event Remaining in H:M:S',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1217,7 +1228,7 @@ function main() {
 			role: 'media.duration',
 			name: 'Event Duration in Minute',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1229,7 +1240,7 @@ function main() {
 			role: 'media.elapsed',
 			name: 'Event Remaining in Minute',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1241,7 +1252,7 @@ function main() {
 			role: 'media.progress',
 			name: 'Event Progress Percent',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1253,7 +1264,7 @@ function main() {
 			role: 'media.broadcastDate',
 			name: 'Event Time Passed',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1265,7 +1276,7 @@ function main() {
 			role: 'media.broadcastDate',
 			name: 'Event Start',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1277,7 +1288,7 @@ function main() {
 			role: 'media.broadcastDate',
 			name: 'Event End',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1344,7 +1355,7 @@ function main2() {
 			role: 'state',
 			name: 'Receiver Model',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1355,7 +1366,7 @@ function main2() {
 			role: 'state',
 			name: 'Receiver Webinterface Version',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1366,7 +1377,7 @@ function main2() {
 			role: 'state',
 			name: 'Receiver used Network',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1377,7 +1388,7 @@ function main2() {
 			role: 'info.ip',
 			name: 'Receiver IP-Adress',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1388,7 +1399,7 @@ function main2() {
 			role: 'state',
 			name: 'Receiver is Recording',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1399,7 +1410,7 @@ function main2() {
 			role: 'state',
 			name: 'min 1 Timer is set',
 			read: true,
-			write: false
+			write: true
 		},
 		native: {}
 	});
@@ -1411,7 +1422,7 @@ function main2() {
 				role: 'info',
 				name: 'Timer List',
 				read: true,
-				write: false
+				write: true
 			},
 			native: {}
 		});
@@ -1426,7 +1437,7 @@ function main2() {
 				role: 'info',
 				name: 'Movie List',
 				read: true,
-				write: false
+				write: true
 			},
 			native: {}
 		});

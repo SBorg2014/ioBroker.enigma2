@@ -133,6 +133,9 @@ sendTo("enigma2.0", "send", {
  
 ## Changelog
 
+### 1.3.4 (2021-08-07)
+* (SBorg2014)           Bugfixes for the new JS-Controller 3.3.x / it's necessary to delete old objects/states / ([#52] (https://github.com/Matten-Matten/ioBroker.enigma2/issues/52))
+
 ### 1.3.3 (2021-06-07)
 * (TDCroPower)          Bugfixes: [#48](https://github.com/Matten-Matten/ioBroker.enigma2/issues/48)
 
